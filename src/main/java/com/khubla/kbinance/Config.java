@@ -49,10 +49,6 @@ public class Config {
 	 * apiprivkey
 	 */
 	private String apiprivkey;
-	/**
-	 * pair
-	 */
-	private String pair;
 
 	public String getApiprivkey() {
 		return apiprivkey;
@@ -60,10 +56,6 @@ public class Config {
 
 	public String getApipubkey() {
 		return apipubkey;
-	}
-
-	public String getPair() {
-		return pair;
 	}
 
 	private void load(String propertiesFile) throws Exception {
@@ -80,7 +72,6 @@ public class Config {
 			 */
 			apipubkey = configuration.get(String.class, "apipubkey").trim();
 			apiprivkey = configuration.get(String.class, "apiprivkey").trim();
-			pair = configuration.get(String.class, "pair").trim();
 		} catch (final Exception e) {
 			logger.error(e);
 			throw e;
@@ -93,9 +84,5 @@ public class Config {
 
 	public void setApipubkey(String apipubkey) {
 		this.apipubkey = apipubkey;
-	}
-
-	public void setPair(String pair) {
-		this.pair = pair;
 	}
 }
