@@ -1,6 +1,6 @@
 # kBinance
 
-A simple Java client API for [Binance](binance.com)
+A simple Java client API for [Binance](http://www.binance.com)
 
 ## License
 
