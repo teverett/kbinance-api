@@ -2,8 +2,6 @@ package com.khubla.kbinance.binance;
 
 import org.glassfish.jersey.client.*;
 
-import com.khubla.kbinance.*;
-
 import jakarta.ws.rs.client.*;
 import jakarta.ws.rs.core.*;
 
@@ -14,13 +12,9 @@ import jakarta.ws.rs.core.*;
  *         </p>
  */
 public abstract class AbstractBinanceClient {
-	public static enum SIDE {
-		BUY, SELL
+	public static enum OrderResponseType {
+		ACK, RESULT, FULL
 	};
-
-	public static enum SymbolStatus {
-		PRE_TRADING, TRADING, POST_TRADING, END_OF_DAY, HALT, AUCTION_MATCH, BREAK
-	}
 
 	public static enum OrderStatus {
 		NEW, PARTIALLY_FILLED, FILLED, CANCELED, PENDING_CANCEL, REJECTED, EXPIRED
@@ -30,8 +24,12 @@ public abstract class AbstractBinanceClient {
 		LIMIT, MARKET, STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, TAKE_PROFIT_LIMIT, LIMIT_MAKER
 	}
 
-	public static enum OrderResponseType {
-		ACK, RESULT, FULL
+	public static enum SIDE {
+		BUY, SELL
+	}
+
+	public static enum SymbolStatus {
+		PRE_TRADING, TRADING, POST_TRADING, END_OF_DAY, HALT, AUCTION_MATCH, BREAK
 	}
 
 	public static enum TimeInForce {
@@ -48,13 +46,24 @@ public abstract class AbstractBinanceClient {
 	 */
 	private final String baseURL;
 	/*
+	 * pub key
+	 */
+	private final String apipubkey;
+	/*
+	 * priv key
+	 */
+	private final String apiprivkey;
+	/*
 	 * request filter
 	 */
-	AuthTokenClientRequestFilter authTokenCilentRequestFilter = new AuthTokenClientRequestFilter(Config.getInstance().getApipubkey());
+	private final AuthTokenClientRequestFilter authTokenCilentRequestFilter;
 
-	public AbstractBinanceClient(String baseURL) {
+	public AbstractBinanceClient(String baseURL, String apipubkey, String apiprivkey) {
 		super();
 		this.baseURL = baseURL;
+		this.apiprivkey = apiprivkey;
+		this.apipubkey = apipubkey;
+		authTokenCilentRequestFilter = new AuthTokenClientRequestFilter(this.apipubkey);
 	}
 
 	protected <T> T doGET(String path, String[] parameters, Class<T> clazz) throws Exception {
@@ -78,7 +87,7 @@ public abstract class AbstractBinanceClient {
 		for (int i = 0; i < parameters.length; i += 2) {
 			webTarget = webTarget.queryParam(parameters[i], parameters[i + 1]);
 		}
-		final String hmac = HMAC256.calcHmacSha256(Config.getInstance().getApiprivkey(), webTarget.getUri().getQuery());
+		final String hmac = HMAC256.calcHmacSha256(apiprivkey, webTarget.getUri().getQuery());
 		webTarget = webTarget.queryParam("signature", hmac);
 		final Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 		final Response response = invocationBuilder.get();
