@@ -10,7 +10,7 @@
 		<target.jvm>1.8</target.jvm>
 		<required-maven-version>3.3.1</required-maven-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>5.7.1</junit.version>
+		<junit.version>5.7.2</junit.version>
 		<commons-cli.version>1.4</commons-cli.version>
 		<commons-configuration2.version>2.7</commons-configuration2.version>
 		<log4j.version>2.14.1</log4j.version>
