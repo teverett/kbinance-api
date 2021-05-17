@@ -32,8 +32,8 @@ public class BinanceClient extends AbstractBinanceClient {
 		return doGET("/api/v3/historicalTrades", new String[] { "symbol", symbol }, RecentTrade[].class);
 	}
 
-	public RecentTrade[] klines(String symbol) throws Exception {
-		return doGET("/api/v3/historicalTrades", new String[] { "symbol", symbol }, RecentTrade[].class);
+	public Double[][] klines(String symbol, String interval) throws Exception {
+		return doGET("/api/v3/klines", new String[] { "symbol", symbol, "interval", interval }, Double[][].class);
 	}
 
 	public OrderBook orderBook(String symbol) throws Exception {

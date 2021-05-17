@@ -71,6 +71,19 @@ public class BinanceClientTests {
 	}
 
 	@Test
+	public void testKlines() {
+		try {
+			final BinanceClient binanceClient = new BinanceClient(AbstractBinanceClient.TEST_BASE_ENDPOINT, apipubkey, apiprivkey);
+			final ExchangeInformation exchangeInformation = binanceClient.exchangeInformation();
+			assertNotNull(exchangeInformation);
+			final Double[][] klines = binanceClient.klines(exchangeInformation.symbols.get(0).symbol, "1h");
+			assertNotNull(klines);
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
 	public void testOrderBook() {
 		try {
 			final BinanceClient binanceClient = new BinanceClient(AbstractBinanceClient.TEST_BASE_ENDPOINT, apipubkey, apiprivkey);
