@@ -23,6 +23,19 @@ public class BinanceClientTests {
 	}
 
 	@Test
+	public void testBookTicker() {
+		try {
+			final BinanceClient binanceClient = new BinanceClient(AbstractBinanceClient.TEST_BASE_ENDPOINT, apipubkey, apiprivkey);
+			final ExchangeInformation exchangeInformation = binanceClient.exchangeInformation();
+			assertNotNull(exchangeInformation);
+			final BookTicker bookTicker = binanceClient.bookTicker(exchangeInformation.symbols.get(0).symbol);
+			assertNotNull(bookTicker);
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
 	public void testCurrentAveragePriceAndPrice() {
 		try {
 			/*

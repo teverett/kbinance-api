@@ -20,6 +20,10 @@ public class BinanceClient extends AbstractBinanceClient {
 		return doSignedGET("/api/v3/account", new String[] {}, AccountInformation.class);
 	}
 
+	public BookTicker bookTicker(String symbol) throws Exception {
+		return doGET("/api/v3/ticker/bookTicker", new String[] { "symbol", symbol }, BookTicker.class);
+	}
+
 	public CurrentAveragePrice currentAveragePrice(String pair) throws Exception {
 		return doGET("/api/v3/avgPrice", new String[] { "symbol", pair }, CurrentAveragePrice.class);
 	}
