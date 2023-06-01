@@ -12,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>5.9.3</junit.version>
 		<jersey.version>3.1.1</jersey.version>
-		<log4j.version>2.19.0</log4j.version>
+		<log4j.version>2.20.0</log4j.version>
 	</properties>
 	<developers>
 		<developer>
